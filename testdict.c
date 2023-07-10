@@ -16,32 +16,17 @@ static const char *words[75] = { "attack", "attention", "attorney", "audience",
 "through", "western", "woman", "young", "yourself" };
 
 int main(void) {
-    dict *D = dictnew();
-    sdict *S = sdictnew();
     size_t i;
-    int64_t tgt;
-    char tgts[64];
+    dict *D = dictnew();
 
     srand((unsigned int)time(NULL));
-
-    // Fill up the dictionaries
     for (i = 0; i < 20; i++) {
-        tgt = 1000 + (99-(int64_t)i);
-        snprintf(tgts, 64, "%lld", tgt);
-        dictadd(D, tgt, rand());
-        sdictadd(S, tgts, words[rand() % 75]);
+        D->add(D, words[rand() % 75], words[rand() % 75]);
     }
 
-    // Print out the number dictionary
-    for (i = 0; i < 20; i++) {
-        tgt = 1000+(99-(int64_t)i);
-        snprintf(tgts, 64, "%lld", tgt);
-        printf("%lld is mapped to %lld\t\t", tgt, dictval(D, tgt));
-        printf("\"%s\" is mapped to \"%s\"\n", tgts, sdictval(S, tgts));
-    }
+    dictprint(D);
     
     dictdestroy(D);
-    sdictdestroy(S);
 
     return 0;
 }
